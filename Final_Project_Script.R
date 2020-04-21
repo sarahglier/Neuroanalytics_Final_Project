@@ -215,10 +215,10 @@ pairs.panels(cort_wide_2[,c("cort_0","cort_1","cort_2","cort_3","cort_4","cort_5
           #The way to interpret the fixed effects is as follows:
               #Bo = intercept (peak) ; the 1 in the above lme model
               #B1 = impact of sex on the peak ; sex term in ^^model
-              #B2 = is the activation slope for males (remember they were coded as 0) ; TBP term above
-              #B3 = is the regulation slope for males ; TAP term above
-              #B4 = is the impact of sex (female, coded as 1) on activation slope ; sex*TBP term
-              #B5 = is the impact of sex (females) on regulation slope ; sex*TAP term
+              #B2 = is the activation slope ; TBP term above
+              #B3 = is the regulation slope ; TAP term above
+              #B4 = is the impact of sex on activation slope ; sex*TBP term
+              #B5 = is the impact of sex on regulation slope ; sex*TAP term
               #random effect - I allow intercept & slope to vary by participant id as not all individuals will show the same starting place (intercept) or same rates of change (slope)
   
       #Now lets add in our covariate age!
