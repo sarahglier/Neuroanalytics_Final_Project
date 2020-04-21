@@ -61,7 +61,7 @@ tempData$meth
 
 ######Inspecting the distribution of original and imputed data#######
 xyplot(tempData,cort_0 ~ cort_1 + cort_2 + cort_3 + cort_4 + cort_5,pch=18,cex=1)
-    #use a scatterplot and plot M_S# against all the other variables
+    #use a scatterplot and plot cort_0 sample against all the other variables
     # magenta points (imputed) 
     # blue ones (observed)
 
