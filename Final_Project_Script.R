@@ -207,7 +207,16 @@ pairs.panels(cort_wide_2[,c("cort_0","cort_1","cort_2","cort_3","cort_4","cort_5
 #MODEL TIME - all fixed effect models specified below are derived from the Lopez-Duran 2014 paper
           str(cort_long_model) #checking the structure of our variables - problematic b/c it thinks sex is an integer and not a factor
                   cort_long_model$sex <- factor(cort_long_model$sex) #we've now changed sex to a factor not int. Can run above line again if want to confirm this
-          
+      
+        #A note on the general form of the equation:
+        # Y (dependent var / outcome) ~ X (predictor / independent variable) + X1*X2 (these are interaction terms you can specify between your predictors) + X3 (some covariate you want to control for)
+        # the ~ represents the = or Y "regressed" on X
+        # the 1|id notes the random effect - this can be expanded... for example say you have randomized participants to protocols/days of the week or some study design you want to account for.
+                        #the way to write in that random effect would be: random = ~ 1 + study_design_random|id
+                                #it can be hard to conceptualize what constitutes a random or fixed effect.  Below are 2 resources that have helped me.
+                                #Drs. Curran and Bauer @ UNC: https://curranbauer.org/wp-content/uploads/2016/SRA/Curran-Bauer-SRA-4APRIL2016-2-up.pdf
+                                #https://stats.stackexchange.com/questions/4700/what-is-the-difference-between-fixed-effect-random-effect-and-mixed-effect-mode
+                                #http://statweb.stanford.edu/~jtaylo/courses/stats203/notes/fixed+random.pdf
       model.sex <- lme(cort ~ 1 + sex + TBP + TAP + sex*TBP + sex*TAP, 
                         random = ~ 1|id,
                         data = cort_long_model) #note if you have NAs, just add in na.action = "na.exclude" to this formula
@@ -253,14 +262,14 @@ pairs.panels(cort_wide_2[,c("cort_0","cort_1","cort_2","cort_3","cort_4","cort_5
   #RM ANOVA Analysis 
       require(afex)
       
-      #RM_ANOVA below just on sex & comparing just linear time scaled variable versus a quadratic fit
+      #RM_ANOVA below using the quadratic fit (time squared variable)
               #Note the RM-ANOVA techniques have huge flaws & this will not work if you are applying your own dataset that contains NA or missing values
                   #if you do want to compare with your own dataset - use na.omit(data) on your dataframe before running below if you have NA values 
       ez.glm("id", "cort", cort_long_model, within=c("timesq"), 
-             between= c("sex"))
+             between= c("sex", "age"))
 
   #Standard Multilevel Model Approach WITHOUT Landmark Registration
-      cort_quad <- lme(cort ~ 1 + sex*timesq,
+      cort_quad <- lme(cort ~ 1 + sex*timesq + age,  
                         random= ~1 + timesq|id,
                         data = cort_long_model)
       summary(cort_quad)    
