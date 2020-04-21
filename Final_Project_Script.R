@@ -29,10 +29,6 @@ urlfile="https://raw.githubusercontent.com/sarahglier/Neuroanalytics_Final_Proje
 cort_wide<-read_csv(url(urlfile))
 
 
-#read in the .csv file using the url() function
-cortisol_wide <- read.csv(file=url(filepath),header=TRUE)
-
-
 #see the variable names - we have subj ID in first column and then 6 cortisol samples in the successive columns
 head(cort_wide)
 
